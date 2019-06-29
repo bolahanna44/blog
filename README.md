@@ -6,10 +6,10 @@ authentication for posts. Integrate 2FA using Twillio Authy app & SMS.
 ## System Requirements
 
 * Mysql
-* Ruby 2.4.1
-* Rails 5.1.3
-* Node >= 6.10.2
-* Yarn >= 0.27.5
+* Ruby 2.6.0
+* Rails 5.2.3
+* Node >= 11.12.0
+* Yarn >= 1.12.3
 
 ## Installation
 
