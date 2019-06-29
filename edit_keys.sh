@@ -1,0 +1,1 @@
+EDITOR=nano bin/rails encrypted:edit config/credentials.yml.enc
