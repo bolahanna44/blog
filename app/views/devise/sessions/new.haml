@@ -1,0 +1,23 @@
+%div.container.center
+  %h2 Log in
+  = render template:'shared/alert'
+  = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+    .field.mb-2
+      = f.label :email
+      %br
+      = f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control"
+    .field.mb-2
+      = f.label :password
+      %br
+      = f.password_field :password, autocomplete: "current-password", class: "form-control"
+
+    - if devise_mapping.rememberable?
+      = f.check_box :remember_me
+      = f.label :remember_me
+    .actions.field
+      = f.submit "Log in", class: 'btn btn-dark col-12 mb-2'
+      = render 'devise/shared/oauth'
+      = render "devise/shared/links"
+
+
+
