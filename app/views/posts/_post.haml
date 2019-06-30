@@ -1,0 +1,14 @@
+.p-2.bd-highlight{style: 'width: 100%'}
+  .card.mb-3.bg-light{:style => "max-width: 540px;"}
+    .card-body
+      %h5.card-title= post.title
+      %p.card-text
+        = truncate(post.description, :length => 200)
+        = link_to 'read more', post_path(post)
+      %p.d-flex.flex-column
+        %small.text-muted
+          Created at:
+          = post.created_at
+        %small.text-muted
+          Created by:
+          = post.user.username

@@ -1,0 +1,42 @@
+= render 'shared/nav'
+.d-flex.align-items-center.flex-column.mt-5
+  %h2.mb-4#title Create Post
+  = render template: 'shared/alert'
+
+  = form_for @post, html: { class: 'col-9' } do |f|
+    #step1
+      .form-group
+        = f.label :title
+        = f.text_field :title, class: 'form-control', required: true, maxlength: 240
+      .form-group
+        = f.label :description
+        = f.text_area :description, class: 'form-control', required: true, maxlength: 500
+      .form-group
+        = f.label :content
+        = f.text_area :content, class: 'form-control', required: true, maxlength: 1700
+      .form-group
+        = button_tag 'Submit', class: 'btn btn-primary', id: 'submit', type: 'button'
+
+    #step2.hidden
+      .form-group
+        = label_tag :mobile
+        = number_field_tag :mobile, nil ,class: 'form-control mb-3', required: true, maxlength: 240
+        = button_tag 'Send Token', class: 'btn btn-primary', id: 'send', type: 'button'
+    #step3.hidden
+      .form-group
+        = label_tag :token
+        = number_field_tag :token, nil ,class: 'form-control mb-3', required: true, maxlength: 240
+        = f.button 'Verify And Submit', class: 'btn btn-primary'
+:javascript
+  $('docuemnt').ready(function () {
+    $('#submit').click(function () {
+      $('#step1').hide();
+      $('#step2').show();
+      $('#title').text('Get OTP');
+    });
+
+    $('#send').click(function () {
+      $('#step2').hide();
+      $('#step3').show();
+    });
+  })

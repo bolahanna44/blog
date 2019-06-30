@@ -1,0 +1,8 @@
+= render 'shared/nav'
+.d-flex.align-items-center.flex-column.mt-5{style: 'overflow-wrap: break-word;'}
+  %div{style: 'overflow-wrap: break-word; width: 100%'}
+    %h2.m-4.text-primary= @post.title
+
+
+%div{style: 'overflow-wrap: break-word;'}
+  %h5.m-4= @post.content

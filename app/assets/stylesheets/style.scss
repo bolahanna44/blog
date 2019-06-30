@@ -6,3 +6,62 @@
   text-align: center;
   min-height: 100vh;
 }
+
+textarea {
+  height: 150px !important;
+}
+.page {
+  @extend .page-item
+}
+
+.page a {
+  @extend .page-link
+}
+
+.current {
+  position: relative;
+  display: block;
+  padding: 0.5rem 0.75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  z-index: 1;
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.next {
+  @extend .page-item
+}
+
+.next a {
+  @extend .page-link
+}
+
+.prev {
+  @extend .page-item
+}
+
+.prev a {
+  @extend .page-link
+}
+
+.last {
+  @extend .page-item
+}
+
+.last a {
+  @extend .page-link
+}
+
+.first {
+  @extend .page-item
+}
+
+.first a {
+  @extend .page-link
+}
+
+.hidden {
+  display: none;
+}

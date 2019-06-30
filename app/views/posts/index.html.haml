@@ -1,1 +1,15 @@
-%p hello
+=render 'shared/nav'
+
+.d-flex.align-items-center.flex-column
+  .d-flex.align-items-start.flex-column.bd-highlight.mb-3.mt-5
+    .p-2
+      =link_to 'Create Post', new_post_path, class: 'btn btn-primary'
+
+    .d-flex.align-items-center.flex-column
+      -if @posts.blank?
+        %h4 No posts to load
+      -@posts.each do |post|
+        = render 'post', post: post
+
+      %nav
+        = paginate @posts
