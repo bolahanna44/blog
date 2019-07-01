@@ -65,3 +65,9 @@ textarea {
 .hidden {
   display: none;
 }
+
+.iti__flag {background-image: asset_url("flags.png");}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .iti__flag {background-image: asset_url("flags@2x.png")}
+}

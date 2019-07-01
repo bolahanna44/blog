@@ -11,16 +11,29 @@ class PostsController < ApplicationController
     @post = load_post
   end
 
-  def create
-    post = Post.new(user_id: current_user.id)
+  def update
+    post = load_post
 
     if post.update(post_params)
-    redirect_to post_path(post)
+      redirect_to post_path(post)
     else
       flash.now.alert = post.errors.full_messages.to_sentence
       render :new
     end
   end
+
+  def create
+    post = current_user.posts.build(post_params)
+
+    if post.save
+      redirect_to publish_post_path(post)
+    else
+      flash.now.alert = post.errors.full_messages.to_sentence
+      render :new
+    end
+  end
+
+  def publish; end
 
   private
 

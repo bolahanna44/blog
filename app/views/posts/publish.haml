@@ -1,0 +1,85 @@
+= render 'shared/nav'
+
+%form#sendTokenForm
+  = label_tag :number, 'Mobile', class: 'd-block'
+  = text_field_tag :number, nil, type: 'tel', id: 'phone', class: 'form-control', required: true
+  = text_field_tag :mobile, nil, class: 'hidden', id: 'mobile'
+  = button_tag 'Send',class: 'btn btn-primary', id: 'send'
+
+%div#loading.hidden Please Wait
+
+%form#verifyTokenForm.hidden
+  = label_tag :token, 'Token', class: 'd-block'
+  = text_field_tag :token, nil, type: 'number', id: 'token', class: 'form-control', required: true
+  = button_tag 'Verify',class: 'btn btn-primary', id: 'verify'
+
+:javascript
+  $('docuemnt').ready(function () {
+    let phoneInput = document.getElementById('phone');
+    window.intlTelInput(phoneInput, {
+      utilsScript: "#{javascript_path('vendors/utils.js')}",
+      separateDialCode: true,
+      autoPlaceholder: 'aggressive',
+      initialCountry: 'ae'
+    });
+
+    $("#phone").keyup(function (e) {
+      let iti = window.intlTelInputGlobals.getInstance(phoneInput);
+      if (iti.isValidNumber()) {
+        phoneInput.setCustomValidity("");
+        let number = iti.getNumber();
+        $('#mobile').val(number)
+      } else {
+        phoneInput.setCustomValidity("Invalid telephone number.")
+      }
+    });
+
+    $('#sendTokenForm').on('submit', function (e) {
+      e.preventDefault();
+      $('#sendTokenForm').hide();
+      $('#loading').show();
+
+      postRequest('/send_token', { mobile: $('#mobile').val()}, function (response) {
+        $('#loading').hide();
+        $('#verifyTokenForm').show();
+        attachListenerToVerifyForm(response.authy_id)
+      }, function (error) {
+        console.error(error)
+      })
+    });
+
+    function attachListenerToVerifyForm (authyId) {
+      $('#verifyTokenForm').on('submit', function (e) {
+        e.preventDefault();
+        $('#verifyTokenForm').hide();
+        $('#loading').show();
+
+        postRequest('/verify_token', { token: $('#token').val(), authy_id: authyId}, function (response) {
+          $('#loading').hide();
+          $('#verifyTokenForm').show();
+        }, function (error) {
+          console.error(error)
+        })
+      });
+    }
+
+
+
+
+    function postRequest(url, data, success, failed) {
+      console.log(url, data)
+      var request = $.ajax({
+        url: url,
+        type: "POST",
+        data: data
+      });
+
+      request.done(function (response, textStatus, jqXHR){
+        success(response);
+      });
+
+      request.fail(function (response, textStatus, jqXHR){
+        failed(response.responseJSON);
+      });
+    }
+  });

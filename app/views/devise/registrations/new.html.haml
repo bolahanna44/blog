@@ -5,12 +5,12 @@
     .field.mb-2
       = f.label :username
       %br
-      = f.text_field :username, autofocus: true, autocomplete: "email", class: "form-control", required: true
+      = f.text_field :username, value: params[:username], autofocus: true, autocomplete: "email", class: "form-control", required: true
 
     .field.mb-2
       = f.label :email
       %br
-      = f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", required: true
+      = f.email_field :email, value: params[:email], autofocus: true, autocomplete: "email", class: "form-control", required: true
 
     .field.mb-2
       = f.label :password

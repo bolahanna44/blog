@@ -1,20 +1,18 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   before_action :load_user
   def facebook
-    if @user.present?
+    if @user.persisted?
       sign_in_and_redirect @user, event: :authentication
     else
-      session["devise.facebook_data"] = request.env["omniauth.auth"]
-      redirect_to new_user_registration_url
+      redirect_to new_registration_path(email: @user.email, username: @user.username)
     end
   end
 
   def google_oauth2
-    if @user.present?
+    if @user.persisted?
       sign_in_and_redirect @user, event: :authentication
     else
-      session['devise.google_data'] = request.env['omniauth.auth'].except(:extra)
-      redirect_to new_user_registration_url
+      redirect_to new_registration_path(email: @user.email, username: @user.username)
     end
   end
 

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root 'posts#index'
   devise_for :users,
              controllers: { omniauth_callbacks: 'users/omniauth_callbacks' },
              skip: %i[password registrations]
@@ -13,7 +14,12 @@ Rails.application.routes.draw do
     get '/users', to: 'devise/registrations#new'
   end
 
-  resources :posts, only: %i[new show create]
-  root 'posts#index'
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  resources :posts, only: %i[new show create] do
+    member do
+      get 'publish'
+    end
+  end
+
+  post 'verify_token', to: 'tokens#verify'
+  post 'send_token', to: 'tokens#send_token'
 end
