@@ -1,7 +1,7 @@
 class TokensController < ApplicationController
   def verify
     Authentication.verify_token(params[:authy_id], params[:token])
-    render json: {}
+    head :ok
   rescue Authentication::AuthyError => e
     render json: {
       error: e.message

@@ -15,10 +15,9 @@ class PostsController < ApplicationController
     post = load_post
 
     if post.update(post_params)
-      redirect_to post_path(post)
+      render json: post
     else
-      flash.now.alert = post.errors.full_messages.to_sentence
-      render :new
+      render json: { error: post.errors.full_messages.to_sentence }, status: :bad_request
     end
   end
 
@@ -33,7 +32,9 @@ class PostsController < ApplicationController
     end
   end
 
-  def publish; end
+  def publish
+    @post = load_post
+  end
 
   private
 
@@ -42,10 +43,10 @@ class PostsController < ApplicationController
   end
 
   def load_posts
-    Post.all.includes(:user).page(params[:page]).per(8)
+    Post.all.order(created_at: :desc).includes(:user).page(params[:page]).per(8)
   end
 
   def post_params
-    params.require(:post).permit(:title, :description, :content)
+    params.require(:post).permit(:title, :description, :content, :state, :publish_date)
   end
 end

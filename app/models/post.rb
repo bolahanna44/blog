@@ -7,12 +7,22 @@ class Post < ApplicationRecord
   validates :description, presence: true, length: { maximum: 500 }
   validates :content, presence: true, length: { maximum: 2000 }
 
+  after_create_commit :schedule_post_publish
+
   aasm column: 'state' do
     state :draft, initial: true
     state :published
 
     event :publish do
       transitions from: :draft, to: :published
+    end
+  end
+
+  private
+
+  def schedule_post_publish
+    if publish_date.present?
+      PublishPostWorker.perform_at(publish_date, id)
     end
   end
 end

@@ -15,52 +15,12 @@
         = f.label :content
         = f.text_area :content, class: 'form-control', required: true, maxlength: 2000
       .form-group
-        = f.label :number, 'Mobile', class: 'd-block'
-        = text_field_tag :number, nil, type: 'tel', id: 'phone', class: 'form-control', required: true
-        = text_field_tag :mobile, nil, class: 'hidden', id: 'mobile'
-
+        = f.label :publish_date
+        = f.text_field :publish_date, class: 'form-control', id: 'flatpickr'
       .form-group
         = f.submit 'Submit',class: 'btn btn-primary'
 
-    -##step2.hidden
-    -#  .form-group
-    -#    = label_tag :mobile
-    -#    = number_field_tag :mobile, nil ,class: 'form-control mb-3', required: true, maxlength: 240
-    -#    = button_tag 'Send Token', class: 'btn btn-primary', id: 'send', type: 'button'
-    -##step3.hidden
-    -#  .form-group
-    -#    = label_tag :token
-    -#    = number_field_tag :token, nil ,class: 'form-control mb-3', required: true, maxlength: 240
-    -#    = f.button 'Verify And Submit', class: 'btn btn-primary'
 :javascript
-  $('docuemnt').ready(function () {
-    let phoneInput = document.getElementById('phone');
-    window.intlTelInput(phoneInput, {
-      utilsScript: "#{javascript_path('vendors/utils.js')}",
-      separateDialCode: true,
-      autoPlaceholder: 'aggressive',
-      initialCountry: 'ae'
-    });
-
-    $("#phone").keyup(function (e) {
-      let iti = window.intlTelInputGlobals.getInstance(phoneInput);
-      if (iti.isValidNumber()) {
-        phoneInput.setCustomValidity("");
-        let number = iti.getNumber();
-        $('#mobile').val(number)
-      } else {
-        phoneInput.setCustomValidity("Invalid telephone number.")
-      }
-    });
-
-    $('#submit').click(function () {
-      $('#step1').hide();
-      $('#step2').show();
-      $('#title').text('Get OTP');
-    });
-
-    $('#send').click(function () {
-      $('#step2').hide();
-      $('#step3').show();
-    });
-  })
+  flatpickr($('#flatpickr'), {
+    enableTime: true
+  });

@@ -1,17 +1,27 @@
 = render 'shared/nav'
 
-%form#sendTokenForm
-  = label_tag :number, 'Mobile', class: 'd-block'
+.d-flex.align-items-center.flex-column
+  .alert.alert-danger.m-3.hidden#error
+
+%form.d-flex.align-items-center.flex-column#sendTokenForm
+  = label_tag :number, 'Mobile', class: 'd-block m-2'
   = text_field_tag :number, nil, type: 'tel', id: 'phone', class: 'form-control', required: true
   = text_field_tag :mobile, nil, class: 'hidden', id: 'mobile'
-  = button_tag 'Send',class: 'btn btn-primary', id: 'send'
+  = button_tag 'Send',class: 'btn btn-primary m-2', id: 'send'
 
-%div#loading.hidden Please Wait
+%div.d-flex.align-items-center.flex-column.m-5.hidden#loading
+  .spinner-border.text-primary{:role => "status"}
+    %span.sr-only Loading...
 
-%form#verifyTokenForm.hidden
-  = label_tag :token, 'Token', class: 'd-block'
-  = text_field_tag :token, nil, type: 'number', id: 'token', class: 'form-control', required: true
-  = button_tag 'Verify',class: 'btn btn-primary', id: 'verify'
+
+%form.d-flex.align-items-center.flex-column.m-5.hidden#verifyTokenForm
+  = label_tag :token, 'Token', class: 'd-block m-2'
+  = text_field_tag :token, nil, type: 'number', id: 'token', class: 'form-control m-2', required: true
+  = button_tag 'Verify',class: 'btn btn-primary m-2', id: 'verify'
+
+%div.d-flex.align-items-center.flex-column.m-5.hidden#successAlert
+  .alert.alert-success#success
+  = link_to 'Open Post', post_path(@post), class: 'btn btn-primary m-2'
 
 :javascript
   $('docuemnt').ready(function () {
@@ -22,6 +32,8 @@
       autoPlaceholder: 'aggressive',
       initialCountry: 'ae'
     });
+
+    // mobile validator
 
     $("#phone").keyup(function (e) {
       let iti = window.intlTelInputGlobals.getInstance(phoneInput);
@@ -34,40 +46,63 @@
       }
     });
 
+    // send token and get authy id
+
     $('#sendTokenForm').on('submit', function (e) {
       e.preventDefault();
-      $('#sendTokenForm').hide();
-      $('#loading').show();
+      hide($('#sendTokenForm'));
+      show($('#loading'));
 
       postRequest('/send_token', { mobile: $('#mobile').val()}, function (response) {
-        $('#loading').hide();
-        $('#verifyTokenForm').show();
+        hide($('#loading'));
+        show($('#verifyTokenForm'));
+
         attachListenerToVerifyForm(response.authy_id)
-      }, function (error) {
-        console.error(error)
+      }, function (msg) {
+        show($('#sendTokenForm'));
+        hide($('#loading'));
+        $('#error').text(msg.error);
+        show($('#error'));
       })
     });
+
+    // Attach submit listener to verify form and pass authy_id to it
 
     function attachListenerToVerifyForm (authyId) {
       $('#verifyTokenForm').on('submit', function (e) {
         e.preventDefault();
-        $('#verifyTokenForm').hide();
-        $('#loading').show();
+        $('#verify').text('Please Wait');
+        $('#verify').attr('disabled','true');
 
         postRequest('/verify_token', { token: $('#token').val(), authy_id: authyId}, function (response) {
-          $('#loading').hide();
-          $('#verifyTokenForm').show();
-        }, function (error) {
-          console.error(error)
+          publishPost();
+        }, function (msg) {
+          $('#verify').text('Verify');
+          $('#verify').removeAttr('disabled');
+          $('#error').text(msg.error);
+          show($('#error'));
         })
       });
     }
 
+    function publishPost () {
+      patchRequest("/posts/#{@post.id}", {post: {state: 'published'}}, function (response) {
+          hide($('#verifyTokenForm'));
+          $('#success').text('your post has been published');
+          show($('#successAlert'))
+      }, function (msg) {
+          $('#verify').text('Verify');
+          $('#verify').removeAttr('disabled');
+          $('#error').text(msg.error);
+          show($('#error'));
+      })
+    }
 
 
+    // request wrapper
 
     function postRequest(url, data, success, failed) {
-      console.log(url, data)
+      console.log(url, data, 'POST')
       var request = $.ajax({
         url: url,
         type: "POST",
@@ -81,5 +116,32 @@
       request.fail(function (response, textStatus, jqXHR){
         failed(response.responseJSON);
       });
+    }
+
+    function patchRequest(url, data, success, failed) {
+      console.log(url, data, 'PATCH')
+      var request = $.ajax({
+        url: url,
+        type: "PATCH",
+        data: data
+      });
+
+      request.done(function (response, textStatus, jqXHR){
+        success(response);
+      });
+
+      request.fail(function (response, textStatus, jqXHR){
+        failed(response.responseJSON);
+      });
+    }
+
+    // JQuery Dom Manipulator
+
+    function show(element) {
+      element.attr('style','display:flex !important');
+    }
+
+    function hide(element) {
+      element.attr('style','display:none !important');
     }
   });
