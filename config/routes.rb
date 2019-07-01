@@ -4,15 +4,9 @@ Rails.application.routes.draw do
   root 'posts#index'
   devise_for :users,
              controllers: { omniauth_callbacks: 'users/omniauth_callbacks' },
-             skip: %i[password registrations]
+             skip: %i[password]
 
   devise_scope :user do
-    resource :registration,
-             only: %i[new create],
-             path: 'users',
-             path_names: { new: 'sign_up' },
-             controller: 'devise/registrations'
-
     get '/users', to: 'devise/registrations#new'
   end
 
