@@ -23,6 +23,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   private
 
   def load_user
+    puts request.env["omniauth.auth"].to_s
     @user = User.from_omniauth(request.env["omniauth.auth"])
   end
 end
