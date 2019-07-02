@@ -6,8 +6,6 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   skip_before_action :verify_authenticity_token
 
-  layout 'users'
-
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   protected
