@@ -4,7 +4,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     if @user.persisted?
       sign_in_and_redirect @user, event: :authentication
     else
-      redirect_to new_registration_path(email: @user.email, username: @user.username)
+      redirect_to new_user_registration_path(email: @user.email, username: @user.username)
     end
   end
 
@@ -12,7 +12,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     if @user.persisted?
       sign_in_and_redirect @user, event: :authentication
     else
-      redirect_to new_registration_path(email: @user.email, username: @user.username)
+      redirect_to new_user_registration_path(email: @user.email, username: @user.username)
     end
   end
 

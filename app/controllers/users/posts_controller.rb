@@ -5,13 +5,12 @@ class Users::PostsController < Users::ApplicationController
 
   def show
     @post = load_post
-    authorize @post
   end
 
   private
 
   def load_post
-    Post.find(params[:id])
+    Post.published.find(params[:id])
   end
 
   def load_posts
