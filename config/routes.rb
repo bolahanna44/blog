@@ -1,7 +1,7 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  root 'posts#index'
+  root 'users/posts#index'
   devise_for :users,
              controllers: { omniauth_callbacks: 'users/omniauth_callbacks' },
              skip: %i[password]
@@ -10,14 +10,18 @@ Rails.application.routes.draw do
     get '/users', to: 'devise/registrations#new'
   end
 
-  resources :posts, only: %i[new show create update] do
+  resources :posts, only: %i[index new create] do
     member do
       get 'publish'
+      post 'authenticate'
     end
   end
 
-  post 'verify_token', to: 'tokens#verify'
-  post 'send_token', to: 'tokens#send_token'
+  namespace :users do
+    resources :posts, only: %i[show]
+  end
 
-  mount Sidekiq::Web => '/sidekiq'
+  resources :tokens, only: :create
+
+  mount Sidekiq::Web => '/sidekiq' if Rails.env.development?
 end

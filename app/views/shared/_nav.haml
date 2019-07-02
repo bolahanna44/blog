@@ -8,7 +8,11 @@
         %a.nav-link{class: "#{current_page?(root_path) && 'active'}", href: root_path}
           Home
           %span.sr-only (current)
-      %li.nav-item
-        %a.nav-link{:href => "#"} My Posts
+      - if current_user.present?
+        %li.nav-item
+          %a.nav-link{class: "#{current_page?(posts_path) && 'active'}", :href => posts_path} My Posts
     .navbar-nav
-      =link_to 'Logout', destroy_user_session_path, method: :delete, class: 'nav-link'
+      - if current_user.present?
+        = link_to 'Logout', destroy_user_session_path, method: :delete, class: 'nav-link'
+      - else
+        = link_to 'Login', new_user_session_path, class: 'nav-link'

@@ -3,14 +3,9 @@
     .card-body
       %h5.card-title
         = link_to post.title, users_post_path(post)
-        - if post.draft?
-          .badge.badge-secondary.m-2 Draft
-
       %p.card-text
         = post.description
       %p.d-flex.flex-column
         %small.text-muted
           by:
           = post.user.username
-        - if post.draft?
-          = link_to 'Publish Post', publish_post_path(post), class: 'btn btn-primary col-2'

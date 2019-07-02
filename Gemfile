@@ -86,3 +86,5 @@ gem 'aasm'
 
 gem 'sidekiq'
 
+gem 'pundit'
+

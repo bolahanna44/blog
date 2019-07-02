@@ -12,9 +12,14 @@ class Post < ApplicationRecord
   aasm column: 'state' do
     state :draft, initial: true
     state :published
+    state :authenticated
 
     event :publish do
-      transitions from: :draft, to: :published
+      transitions from: %i[authenticated draft], to: :published
+    end
+
+    event :authenticate do
+      transitions from: :draft, to: :authenticated
     end
   end
 

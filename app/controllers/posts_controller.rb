@@ -7,20 +7,6 @@ class PostsController < ApplicationController
     @post = Post.new
   end
 
-  def show
-    @post = load_post
-  end
-
-  def update
-    post = load_post
-
-    if post.update(post_params)
-      render json: post
-    else
-      render json: { error: post.errors.full_messages.to_sentence }, status: :bad_request
-    end
-  end
-
   def create
     post = current_user.posts.build(post_params)
 
@@ -34,19 +20,31 @@ class PostsController < ApplicationController
 
   def publish
     @post = load_post
+    authorize @post
+  end
+
+  def authenticate
+    post = load_post
+    authorize post
+    Authentication.verify_token(params[:authy_id], params[:token])
+    post.publish_date.present? && post.publish_date > Time.now ? post.authenticate! : post.publish!
+  rescue Authentication::AuthyError => e
+    render json: {
+        error: e.message
+    }, status: :bad_request
   end
 
   private
+
+  def post_params
+    params.require(:post).permit(:title, :description, :content, :state, :publish_date)
+  end
 
   def load_post
     Post.find(params[:id])
   end
 
   def load_posts
-    Post.all.order(created_at: :desc).includes(:user).page(params[:page]).per(8)
-  end
-
-  def post_params
-    params.require(:post).permit(:title, :description, :content, :state, :publish_date)
+    current_user.posts.order(created_at: :desc).page(params[:page]).per(8)
   end
 end

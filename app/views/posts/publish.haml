@@ -21,7 +21,7 @@
 
 %div.d-flex.align-items-center.flex-column.m-5.hidden#successAlert
   .alert.alert-success#success
-  = link_to 'Open Post', post_path(@post), class: 'btn btn-primary m-2'
+  = link_to 'Open Post', users_post_path(@post), class: 'btn btn-primary m-2'
 
 :javascript
   $('docuemnt').ready(function () {
@@ -53,7 +53,7 @@
       hide($('#sendTokenForm'));
       show($('#loading'));
 
-      postRequest('/send_token', { mobile: $('#mobile').val()}, function (response) {
+      postRequest('/tokens', { mobile: $('#mobile').val()}, function (response) {
         hide($('#loading'));
         show($('#verifyTokenForm'));
 
@@ -74,8 +74,10 @@
         $('#verify').text('Please Wait');
         $('#verify').attr('disabled','true');
 
-        postRequest('/verify_token', { token: $('#token').val(), authy_id: authyId}, function (response) {
-          publishPost();
+        postRequest("/posts/#{@post.id}/authenticate", { token: $('#token').val(), authy_id: authyId}, function (response) {
+          hide($('#verifyTokenForm'));
+          $('#success').text('your post has been published');
+          show($('#successAlert'))
         }, function (msg) {
           $('#verify').text('Verify');
           $('#verify').removeAttr('disabled');
@@ -84,20 +86,6 @@
         })
       });
     }
-
-    function publishPost () {
-      patchRequest("/posts/#{@post.id}", {post: {state: 'published'}}, function (response) {
-          hide($('#verifyTokenForm'));
-          $('#success').text('your post has been published');
-          show($('#successAlert'))
-      }, function (msg) {
-          $('#verify').text('Verify');
-          $('#verify').removeAttr('disabled');
-          $('#error').text(msg.error);
-          show($('#error'));
-      })
-    }
-
 
     // request wrapper
 
