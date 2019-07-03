@@ -84,15 +84,7 @@
 
        /* Popover */
 	   
-        $('[data-toggle="popover"]').popover();		  
-		  
-		  
-	   
-       /* Ajaxchimp for Subscribe Form */
-		
-        $('#mc-form').ajaxChimp();
-		
-		
+        $('[data-toggle="popover"]').popover();
 		
        
        /* Video and Google Map Popup */

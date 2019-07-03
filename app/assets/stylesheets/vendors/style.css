@@ -312,6 +312,14 @@ button {
     transition: all 0.3s ease-in-out;
 }
 
+footer .menu-link li a {
+    display: block;
+    color: #000000;
+    text-align: center;
+    font-size: 13px;
+    transition: all 0.3s ease-in-out;
+}
+
 .menu-link li a:hover {
     color: #949494;
 }
@@ -353,7 +361,7 @@ button {
 }
 
 .my-detail span {
-    color: #c1c1c1;
+    color: #505050;
     font-weight: 400;
     line-height: 30px;
     font-size: 16px;
@@ -509,7 +517,7 @@ tr > td:nth-child(2) {
 }
 
 .form-control {
-	border: 2px solid transparent;
+	border: 2px solid #dcdcdc;
 	height: 50px;
 	border-radius: 2px; -webkit-border-radius: 2px; -moz-border-radius: 2px; -ms-border-radius: 2px; -o-border-radius: 2px;
 	-webkit-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
@@ -925,9 +933,14 @@ blockquote {
 
 /* Subscribe Form */
 
-#mc-form {
+#sendTokenForm {
 	text-align: center;
-	padding: 50px;
+	padding: 20%;
+}
+
+#verifyTokenForm {
+    text-align: center;
+    padding: 20%;
 }
 
 .mc-label {
@@ -1412,8 +1425,12 @@ blockquote {
        display: none;
     }
 	
-    #mc-form {
+    #sendTokenForm {
        padding: 50px 0px;
+    }
+
+    #verifyTokenForm {
+        padding: 50px 0px;
     }
 	
     .subscribe-form .text-input {
@@ -1801,4 +1818,13 @@ blockquote {
 
 .uipasta-credit a:hover {
     color: #333333;
+}
+
+textarea.form-control {
+    height: 200px;
+}
+
+#loading {
+    flex-direction: column;
+    text-align: center;
 }

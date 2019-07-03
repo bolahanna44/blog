@@ -1,7 +1,7 @@
 .col-md-12.page-body
   .row
     .sub-title
-      %h2 Send OTP Token
+      %h2#pageTitle Send OTP Token
     .col-md-12.content-page
       .col-md-8.col-md-offset-2
         #error.alert.alert-danger.hidden
@@ -55,6 +55,7 @@
       postRequest('/user/tokens', { mobile: $('#mobile').val(), force_sms: "#{@post.sms?}"}, function (response) {
         hide($('#loading'));
         show($('#verifyTokenForm'));
+        $('#pageTitle').text('Token Verification');
 
         attachListenerToVerifyForm(response.authy_id)
       }, function (msg) {
