@@ -10,6 +10,14 @@ class User::ApplicationController < ActionController::Base
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
+  def policy_scope(scope)
+    super([:user, scope])
+  end
+
+  def authorize(record, query = nil)
+    super([:user, record], query)
+  end
+
   protected
 
   def user_not_authorized

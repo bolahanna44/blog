@@ -19,7 +19,7 @@ local:
 google:
    service: GCS
    project: UTRUS
-   credentials: <%= Rails.root.join("keys/gcs_key.json") %>
+   credentials: <%= Rails.root.join("config/keys/gcs_key.json") %>
    bucket: mrdraper
 
 # Use rails credentials:edit to set the Azure Storage secret (as azure_storage:storage_access_key)

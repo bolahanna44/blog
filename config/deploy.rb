@@ -24,7 +24,14 @@ set :repo_url, 'https://github.com/bolahanna44/blog.git'
 append :linked_files, 'config/master.key', 'config/database.yml'
 
 # Default value for linked_dirs is []
-append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system', 'storage'
+append :linked_dirs,
+       'log',
+       'tmp/pids',
+       'tmp/cache',
+       'tmp/sockets',
+       'public/system',
+       'storage',
+       'config/keys'
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
