@@ -1,7 +1,8 @@
 .col-md-3
   .about-fixed
     .my-pic
-      %img{:alt => "", :src => asset_path("pic/my-pic.png")}/
+      %a{href: root_url}
+        %img{:alt => "", :src => asset_path("pic/my-pic.png")}/
       %a.collapsed{"data-target" => "#menu", "data-toggle" => "collapse", :href => "javascript:void(0)"}
         %i.icon-menu.menu
       #menu.collapse{style: 'background-color: #505050;'}

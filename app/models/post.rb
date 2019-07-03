@@ -1,5 +1,8 @@
 class Post < ApplicationRecord
   include AASM
+  extend FriendlyId
+
+  friendly_id :title, use: :slugged
 
   enum auth_method: %i[authy_app sms]
 

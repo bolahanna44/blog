@@ -48,7 +48,7 @@ class User::PostsController < User::ApplicationController
   end
 
   def load_post
-    Post.find(params[:id])
+    Post.friendly.find(params[:id])
   end
 
   def load_posts

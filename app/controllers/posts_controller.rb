@@ -5,12 +5,16 @@ class PostsController < ApplicationController
 
   def show
     @post = load_post
+    @page_description = @post.description
+    @page_keywords    = @post.title.split(' ').join(',')
+    @page_image_src = @post.photo.attached? && url_for(@post.photo)
+
   end
 
   private
 
   def load_post
-    Post.published.find(params[:id])
+    Post.friendly.published.find(params[:id])
   end
 
   def load_posts
