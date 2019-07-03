@@ -3,5 +3,28 @@
     = link_to "Sign in with Google", omniauth_authorize_path(resource_name, :google_oauth2),
     class: 'mb-2 btn btn btn-danger col-12'
     %br
-    = link_to "Sign in with Facebook", omniauth_authorize_path(resource_name, :facebook),
+    = link_to "Sign in with Facebook", 'javascript:void(0)', id: 'loginbutton',
     class: 'mb-2 btn btn-primary col-12'
+
+-#:javascript
+-#  $(document).ready(function() {
+-#      $.ajaxSetup({ cache: true });
+-#    $.getScript('https://connect.facebook.net/en_US/sdk.js', function(){
+-#
+-#      FB.init({
+-#        appId: '428475257701660',
+-#        version: 'v2.7' // or v2.1, v2.2, v2.3, ...
+-#      });
+-#
+-#      $('#loginbutton').removeAttr('disabled');
+-#
+-#      FB.getLoginStatus((response) => {
+-#        if (response.status === "not_authorized") {
+-#          FB.login(function(response){
+-#                  // Handle the response object, like in statusChangeCallback() in our demo
+-#                  // code.
+-#                }, {scope: 'public_profile,email'})
+-#        }
+-#      });
+-#    });
+-#  });

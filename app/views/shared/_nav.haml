@@ -1,18 +1,29 @@
-%nav.navbar.navbar-expand-lg.navbar-dark.bg-primary
-  %button.navbar-toggler{"aria-controls" => "navbarTogglerDemo01", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarTogglerDemo01", "data-toggle" => "collapse", :type => "button"}
-    %span.navbar-toggler-icon
-  #navbarTogglerDemo01.collapse.navbar-collapse
-    %a.navbar-brand{:href => root_path} Mr.Draper
-    %ul.navbar-nav.mr-auto.mt-2.mt-lg-0
-      %li.nav-item
-        %a.nav-link{class: "#{current_page?(root_path) && 'active'}", href: root_path}
-          Home
-          %span.sr-only (current)
-      - if current_user.present?
-        %li.nav-item
-          %a.nav-link{class: "#{current_page?(posts_path) && 'active'}", :href => posts_path} My Posts
-    .navbar-nav
-      - if current_user.present?
-        = link_to 'Logout', destroy_user_session_path, method: :delete, class: 'nav-link'
-      - else
-        = link_to 'Login', new_user_session_path, class: 'nav-link'
+.col-md-3
+  .about-fixed
+    .my-pic
+      %img{:alt => "", :src => asset_path("pic/my-pic.png")}/
+      %a.collapsed{"data-target" => "#menu", "data-toggle" => "collapse", :href => "javascript:void(0)"}
+        %i.icon-menu.menu
+      #menu.collapse
+        %ul.menu-link
+          %li
+            %a{:href => root_path} Home
+          -if current_user.present?
+            %li
+              %a{:href => user_posts_path} My Posts
+            %li
+              = link_to 'Logout', destroy_user_session_path, method: :delete
+          -else
+            %li
+              = link_to 'Login', new_user_session_path
+    .my-detail
+      .white-spacing
+        %h1 Mr.Draper
+        %span Your Personal Stylist
+      %ul.social-icon
+        %li
+          %a.facebook{:href => "#", :target => "_blank"}
+            %i.fa.fa-facebook
+        %li
+          %a.twitter{:href => "#", :target => "_blank"}
+            %i.fa.fa-twitter

@@ -2,6 +2,7 @@ class Post < ApplicationRecord
   include AASM
 
   belongs_to :user
+  has_one_attached :photo
 
   validates :title, presence: true, length: { maximum: 240 }
   validates :description, presence: true, length: { maximum: 500 }

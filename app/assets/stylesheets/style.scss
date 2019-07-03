@@ -1,69 +1,22 @@
-.center {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  min-height: 100vh;
-}
-
-textarea {
-  height: 150px !important;
-}
-.page {
-  @extend .page-item
-}
-
-.page a {
-  @extend .page-link
-}
-
-.current {
-  position: relative;
-  display: block;
-  padding: 0.5rem 0.75rem;
-  margin-left: -1px;
-  line-height: 1.25;
-  z-index: 1;
-  color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
-}
-
-.next {
-  @extend .page-item
-}
-
-.next a {
-  @extend .page-link
-}
-
-.prev {
-  @extend .page-item
-}
-
-.prev a {
-  @extend .page-link
-}
-
-.last {
-  @extend .page-item
-}
-
-.last a {
-  @extend .page-link
-}
-
-.first {
-  @extend .page-item
-}
-
-.first a {
-  @extend .page-link
-}
-
 .hidden {
   display: none !important;
+}
+
+.submit_btn {
+  position: absolute;
+  font-size: 16px;
+  letter-spacing: 0.7px;
+  color: #FFF;
+  background: #1abc9c;
+  border: none;
+  top: 35px;
+  right: 20px;
+  height: 50px;
+  bottom: 5px;
+  border-radius: 50px;
+  width: 150px;
+  text-align: center;
+  outline: none;
 }
 
 .iti__flag {background-image: asset_url("flags.png");}

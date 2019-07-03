@@ -1,30 +1,27 @@
-= render 'shared/nav'
-
-.d-flex.align-items-center.flex-column
-  .alert.alert-danger.m-3.hidden#error
-
-%form.d-flex.align-items-center.flex-column#sendTokenForm
-  = label_tag :number, 'Mobile', class: 'd-block m-2'
-  = text_field_tag :number, nil, type: 'tel', id: 'phone', class: 'form-control', required: true
-  = text_field_tag :mobile, nil, class: 'hidden', id: 'mobile'
-  = button_tag 'Send',class: 'btn btn-primary m-2', id: 'send'
-
-%div.d-flex.align-items-center.flex-column.m-5.hidden#loading
-  .spinner-border.text-primary{:role => "status"}
-    %span.sr-only Loading...
-
-
-%form.d-flex.align-items-center.flex-column.m-5.hidden#verifyTokenForm
-  = label_tag :token, 'Token', class: 'd-block m-2'
-  = text_field_tag :token, nil, type: 'number', id: 'token', class: 'form-control m-2', required: true
-  = button_tag 'Verify',class: 'btn btn-primary m-2', id: 'verify'
-
-%div.d-flex.align-items-center.flex-column.m-5.hidden#successAlert
-  .alert.alert-success#success
-  = link_to 'Open Post', users_post_path(@post), class: 'btn btn-primary m-2'
+.col-md-12.page-body
+  .row
+    .sub-title
+      %h2 Send OTP Token
+    .col-md-12.content-page
+      .col-md-8.col-md-offset-2
+        #error.alert.alert-danger.hidden
+        #success.alert.alert-success.hidden
+        %form#sendTokenForm{:action => "http://uipasta.us14.list-manage.com/subscribe/post?u=854825d502cdc101233c08a21&id=86e84d44b7", :method => "post"}
+          .subscribe-form.margin-top-20
+            %input#phone.text-input{:placeholder => "Mobile", :type => "tel"}/
+            %input#mobile{:type => "hidden"}/
+            %button.submit-btn{:type => "submit"} Send
+        %form#verifyTokenForm.hidden{:action => "http://uipasta.us14.list-manage.com/subscribe/post?u=854825d502cdc101233c08a21&id=86e84d44b7", :method => "post"}
+          .subscribe-form.margin-top-20
+            %input#token.text-input{:placeholder => "Token", :type => "number"}/
+            %button.submit-btn#verify{:type => "submit"} Verify
+        %label.hidden#loading
+          Loading...
+%a.scroll-to-top{:href => "#"}
+  %i.fa.fa-long-arrow-up
 
 :javascript
-  $('docuemnt').ready(function () {
+  $('document').ready(function () {
     let phoneInput = document.getElementById('phone');
     window.intlTelInput(phoneInput, {
       utilsScript: "#{javascript_path('vendors/utils.js')}",
@@ -53,7 +50,7 @@
       hide($('#sendTokenForm'));
       show($('#loading'));
 
-      postRequest('/tokens', { mobile: $('#mobile').val()}, function (response) {
+      postRequest('/user/tokens', { mobile: $('#mobile').val()}, function (response) {
         hide($('#loading'));
         show($('#verifyTokenForm'));
 
@@ -74,10 +71,11 @@
         $('#verify').text('Please Wait');
         $('#verify').attr('disabled','true');
 
-        postRequest("/posts/#{@post.id}/authenticate", { token: $('#token').val(), authy_id: authyId}, function (response) {
+        postRequest("/user/posts/#{@post.id}/authenticate", { token: $('#token').val(), authy_id: authyId}, function (response) {
           hide($('#verifyTokenForm'));
+          hide($('#error'))
           $('#success').text('your post has been published');
-          show($('#successAlert'))
+          show($('#success'))
         }, function (msg) {
           $('#verify').text('Verify');
           $('#verify').removeAttr('disabled');
@@ -133,3 +131,5 @@
       element.attr('style','display:none !important');
     }
   });
+
+

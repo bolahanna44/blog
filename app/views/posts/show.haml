@@ -1,0 +1,27 @@
+.col-md-12.page-body
+  .row
+    .sub-title
+      %h2 Post
+      - if current_user.present?
+        %a{:href => new_user_post_path}
+          %button.submit-btn.submit_btn{:type => "button"} Create Post
+    .col-md-12.content-page
+      / Blog Post Start
+      .col-md-12.blog-post{style: 'border-bottom: 1px dashed #dedede; margin-top: 12px'}
+        - if @post.photo.attached?
+          .post-image
+            %img{:alt => "", :src => url_for(@post.photo)}/
+        .post-title
+          %h1= @post.title
+        .post-info
+          %span
+            November 23, 2016 / by
+            = @post.user.username
+
+        %p= @post.content
+
+
+:javascript
+  $("document").ready(function () {
+    $("div.blog-post").show();
+  })
