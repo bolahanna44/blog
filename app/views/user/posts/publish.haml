@@ -23,6 +23,8 @@
 :javascript
   $('document').ready(function () {
     let phoneInput = document.getElementById('phone');
+    phoneInput.setCustomValidity("Invalid telephone number.");
+
     window.intlTelInput(phoneInput, {
       utilsScript: "#{javascript_path('vendors/utils.js')}",
       separateDialCode: true,
@@ -74,7 +76,7 @@
         postRequest("/user/posts/#{@post.id}/authenticate", { token: $('#token').val(), authy_id: authyId}, function (response) {
           hide($('#verifyTokenForm'));
           hide($('#error'))
-          $('#success').text('your post has been published');
+          $('#success').text('your post will be posted or scheduled depending on selected preference');
           show($('#success'))
         }, function (msg) {
           $('#verify').text('Verify');

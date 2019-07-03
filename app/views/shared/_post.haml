@@ -10,7 +10,7 @@
       November 23, 2016 / by
       = post.user.username
       - if current_page?(user_posts_path)
-        = "/ status #{post.state.humanize}"
+        = "/ status: #{post.state.humanize}"
 
   %p= post.description
   %a.button.button-style.button-anim.fa.fa-long-arrow-right{:href => post_path(post)}
