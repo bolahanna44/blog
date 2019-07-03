@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_02_034827) do
+ActiveRecord::Schema.define(version: 2019_07_03_000530) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -42,7 +42,17 @@ ActiveRecord::Schema.define(version: 2019_07_02_034827) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "publish_date"
+    t.integer "auth_method"
     t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
+  create_table "tokens", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "tokenable_type"
+    t.bigint "tokenable_id"
+    t.string "method"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tokenable_type", "tokenable_id"], name: "index_tokens_on_tokenable_type_and_tokenable_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

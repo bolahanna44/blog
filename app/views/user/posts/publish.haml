@@ -50,7 +50,7 @@
       hide($('#sendTokenForm'));
       show($('#loading'));
 
-      postRequest('/user/tokens', { mobile: $('#mobile').val()}, function (response) {
+      postRequest('/user/tokens', { mobile: $('#mobile').val(), force_sms: "#{@post.sms?}"}, function (response) {
         hide($('#loading'));
         show($('#verifyTokenForm'));
 

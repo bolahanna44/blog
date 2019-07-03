@@ -7,9 +7,9 @@ class Authentication
   end
 
   class << self
-    def send_token(mobile, email)
+    def send_token(mobile, email, force_sms)
       authy_id = authy_id(mobile, email)
-      response = Authy::API.request_sms(id: authy_id)
+      response = Authy::API.request_sms(id: authy_id, force: force_sms == 'true')
       response.ok? ? authy_id : raise(AuthyError, response.errors.dig('message'))
     end
 

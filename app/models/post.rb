@@ -1,6 +1,8 @@
 class Post < ApplicationRecord
   include AASM
 
+  enum auth_method: %i[authy_app sms]
+
   belongs_to :user
   has_one_attached :photo
 

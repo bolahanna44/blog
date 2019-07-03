@@ -37,7 +37,9 @@ class User::PostsController < User::ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :description, :content, :state, :publish_date, :photo)
+    params.require(:post).permit(:title, :description,
+                                 :content, :state,
+                                 :publish_date, :photo, :auth_method)
   end
 
   def load_post
