@@ -27,7 +27,8 @@ class User::PostsController < User::ApplicationController
     post = load_post
     authorize post
     Authentication.verify_token(params[:authy_id], params[:token])
-    post.publish_date.present? && post.publish_date > Time.now ? post.authenticate! : post.publish!
+    post.authenticate!
+    post.publish_date.present? && post.publish_date > Time.now ? post.schedule! : post.publish!
   rescue Authentication::AuthyError => e
     render json: {
         error: e.message
