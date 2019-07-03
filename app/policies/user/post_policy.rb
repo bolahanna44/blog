@@ -1,4 +1,4 @@
-class PostPolicy < ApplicationPolicy
+class User::PostPolicy < ApplicationPolicy
   def authenticate?
     @record.user == @user && @record.draft?
   end
