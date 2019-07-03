@@ -3,7 +3,7 @@
     = link_to "Sign in with Google", omniauth_authorize_path(resource_name, :google_oauth2),
     class: 'mb-2 btn btn btn-danger col-12'
     %br
-    = link_to "Sign in with Facebook", 'javascript:void(0)', id: 'loginbutton',
+    = link_to "Sign in with Facebook", omniauth_authorize_path(resource_name, :facebook),
     class: 'mb-2 btn btn-primary col-12'
 
 -#:javascript
