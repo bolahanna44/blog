@@ -6,7 +6,8 @@
         %a{:href => new_user_post_path}
           %button.submit-btn.submit_btn{:type => "button"} Create Post
     .col-md-12.content-page
-      / Blog Post Start
+      = render 'shared/alert'
+      = render 'shared/notice'
       - if @posts.blank?
         .col-md-12.blog-post
           .post-title

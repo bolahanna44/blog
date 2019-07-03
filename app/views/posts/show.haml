@@ -6,11 +6,12 @@
         %a{:href => new_user_post_path}
           %button.submit-btn.submit_btn{:type => "button"} Create Post
     .col-md-12.content-page
-      / Blog Post Start
+      = render 'shared/alert'
+      = render 'shared/notice'
       .col-md-12.blog-post{style: 'border-bottom: 1px dashed #dedede; margin-top: 12px'}
         - if @post.photo.attached?
           .post-image
-            %img{:alt => "", :src => url_for(@post.photo)}/
+            = image_tag @post.photo.variant(resize: "810x326")
         .post-title
           %h1= @post.title
         .post-info

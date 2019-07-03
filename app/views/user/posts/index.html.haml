@@ -5,7 +5,8 @@
       %a{:href => new_user_post_path}
         %button.submit-btn.submit_btn{:type => "button"} Create Post
     .col-md-12.content-page
-      / Blog Post Start
+      = render 'shared/alert'
+      = render 'shared/notice'
       - if @posts.blank?
         .col-md-12.blog-post
           .post-title
@@ -13,9 +14,10 @@
       - else
         - @posts.each do |post|
           = render 'shared/post', post: post
-      .col-md-12.text-center
-        %a#load-more-post.load-more-button{:href => "javascript:void(0)"} Load
-        #post-end-message
+      -if @posts.count > 4
+        .col-md-12.text-center
+          %a#load-more-post.load-more-button{:href => "javascript:void(0)"} Load
+          #post-end-message
 
 %a.scroll-to-top{:href => "#"}
   %i.fa.fa-long-arrow-up

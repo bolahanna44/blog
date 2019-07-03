@@ -74,10 +74,6 @@ gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
 
 gem 'haml'
-gem 'bootstrap', '~> 4.3.1'
-gem 'jquery-rails'
-gem 'kaminari'
-
 
 gem 'authy'
 gem 'phonelib'
@@ -88,3 +84,7 @@ gem 'sidekiq'
 
 gem 'pundit'
 
+
+
+gem "mini_magick"
+gem "google-cloud-storage", "~> 1.11", require: false

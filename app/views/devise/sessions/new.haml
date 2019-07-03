@@ -1,6 +1,6 @@
 %div.container
   %h2 Log in
-  = render template:'shared/alert'
+  = render 'shared/alert'
   = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
     .field.mb-2
       = f.label :email
