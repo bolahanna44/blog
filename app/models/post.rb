@@ -19,7 +19,7 @@ class Post < ApplicationRecord
     state :scheduled
 
     event :publish do
-      transitions from: %i[authenticated draft], to: :published
+      transitions from: %i[schedule draft], to: :published
     end
 
     event :authenticate do
