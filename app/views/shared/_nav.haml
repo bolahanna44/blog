@@ -4,7 +4,7 @@
       %img{:alt => "", :src => asset_path("pic/my-pic.png")}/
       %a.collapsed{"data-target" => "#menu", "data-toggle" => "collapse", :href => "javascript:void(0)"}
         %i.icon-menu.menu
-      #menu.collapse
+      #menu.collapse{style: 'background-color: #505050;'}
         %ul.menu-link
           %li
             %a{:href => root_path} Home

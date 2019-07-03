@@ -306,14 +306,14 @@ button {
 
 .menu-link li a {
     display: block;
-    color: #333333;
+    color: #ffffff;
     text-align: center;
     font-size: 13px;
     transition: all 0.3s ease-in-out;
 }
 
 .menu-link li a:hover {
-    color: #1abc9c;
+    color: #949494;
 }
 
 
@@ -328,6 +328,7 @@ button {
 .my-pic {
     width: 100%;
     box-shadow: -2px -1px 88px 0px rgba(0,0,0,0.17);
+    background-color: black;
 }
 
 .my-pic img {
