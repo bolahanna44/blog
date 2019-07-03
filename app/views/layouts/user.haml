@@ -2,8 +2,9 @@
 %html
   %head
     %title Mr.Draper
-    = csrf_meta_tags
-    = csp_meta_tag
+    -#= csrf_meta_tags
+    -#= csp_meta_tag
+    %meta{name:"viewport",content:"width=device-width, initial-scale:1.0"}
     %link{ href: 'https://fonts.googleapis.com/css?family=Poppins:400,300,500,600,700', rel: 'stylesheet' }
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = stylesheet_link_tag 'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css'
@@ -31,4 +32,7 @@
                   %a{:href => "http://www.uipasta.com", :target => "_blank"} UiPasta
     %a.scroll-to-top{:href => "#"}
       %i.fa.fa-long-arrow-up
+
+    = javascript_include_tag 'vendors/plugin'
+    = javascript_include_tag 'vendors/scripts'
 
