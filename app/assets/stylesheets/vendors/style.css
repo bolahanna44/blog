@@ -1828,3 +1828,7 @@ textarea.form-control {
     flex-direction: column;
     text-align: center;
 }
+
+.mb-2 {
+    margin-bottom: 20px;
+}

@@ -17,12 +17,12 @@
       %br
       = f.password_field :password, autocomplete: "new-password", class: "form-control", required: true
 
-    .field.mb-4
+    .field.mb-2
       = f.label :password_confirmation
       %br
       = f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", required: true
 
     .actions
-      = f.submit "Sign up", class: 'btn btn-dark col-12 mb-2'
+      = f.submit "Sign up", class: 'btn btn-info col-12 mb-2'
       = render 'devise/shared/oauth'
       = render "devise/shared/links"
