@@ -15,7 +15,8 @@
           %h1= @post.title
         .post-info
           %span
-            November 23, 2016 / by
+            = @post.created_at.strftime('%B %e, %Y')
+            , by
             = @post.user.username
 
         %p= @post.content
