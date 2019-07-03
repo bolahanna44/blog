@@ -7,6 +7,10 @@ class User::PostsController < User::ApplicationController
     @post = Post.new
   end
 
+  def show
+    @post = load_post
+  end
+
   def create
     post = current_user.posts.build(post_params)
 

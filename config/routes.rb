@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   resources :posts, only: %i[show]
 
   namespace :user do
-    resources :posts, only: %i[index new create] do
+    resources :posts, only: %i[index new create show] do
       member do
         get 'publish'
         post 'authenticate'

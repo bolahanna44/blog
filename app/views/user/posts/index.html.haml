@@ -13,7 +13,7 @@
             %h1 No Posts To Show
       - else
         - @posts.each do |post|
-          = render 'shared/post', post: post
+          = render 'post', post: post
       -if @posts.count > 4
         .col-md-12.text-center
           %a#load-more-post.load-more-button{:href => "javascript:void(0)"} Load

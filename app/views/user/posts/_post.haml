@@ -1,0 +1,21 @@
+.col-md-12.blog-post{style: 'border-bottom: 1px dashed #dedede; margin-top: 12px'}
+  - if post.photo.attached?
+    .post-image
+      = image_tag post.photo.variant(resize: "810x326")
+  .post-title
+    %a{:href => user_post_path(post)}
+      %h1= post.title
+  .post-info
+    %span
+      = post.created_at.strftime('%B %e, %Y')
+      by
+      = post.user.username
+      = "- status: #{post.state.humanize}"
+
+  %p= post.description
+
+  %a.button.button-style.button-anim.fa.fa-long-arrow-right{:href => user_post_path(post)}
+    %span Read More
+
+  %a.button.button-style.button-anim.fa.fa-long-arrow-right{:href => publish_user_post_path(post)}
+    %span Publish Post

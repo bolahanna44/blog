@@ -1,0 +1,29 @@
+.col-md-12.page-body
+  .row
+    .sub-title
+      %h2 Post
+      - if current_user.present?
+        %a{:href => new_user_post_path}
+          %button.submit-btn.submit_btn{:type => "button"} Create Post
+    .col-md-12.content-page
+      = render 'shared/alert'
+      = render 'shared/notice'
+      .col-md-12.blog-post{style: 'border-bottom: 1px dashed #dedede; margin-top: 12px'}
+        - if @post.photo.attached?
+          .post-image
+            = image_tag @post.photo.variant(resize: "810x326")
+        .post-title
+          %h1= @post.title
+        .post-info
+          %span
+            = @post.created_at.strftime('%B %e, %Y')
+            , by
+            = @post.user.username
+
+        %p= @post.content
+
+
+:javascript
+  $("document").ready(function () {
+    $("div.blog-post").show();
+  })
