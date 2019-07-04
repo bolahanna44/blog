@@ -35,6 +35,6 @@ class User::PostsController < User::ApplicationController
   end
 
   def load_posts
-    current_user.posts.order(created_at: :desc)
+    current_user.posts.order(created_at: :desc).includes(:otp)
   end
 end

@@ -16,6 +16,6 @@
 
   %a.button.button-style.button-anim.fa.fa-long-arrow-right{:href => user_post_path(post)}
     %span Read More
-
-  %a.button.button-style.button-anim.fa.fa-long-arrow-right{:href => user_otp_path(post.otp)}
-    %span Publish Post
+  - if !post.published?
+    %a.button.button-style.button-anim.fa.fa-long-arrow-right{:href => user_otp_path(post.otp)}
+      %span Publish Post
