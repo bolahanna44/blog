@@ -36,4 +36,8 @@ class Otp < ApplicationRecord
   def verify_token
     Authentication.verify_token(authy_id, token)
   end
+
+  def publish_post
+    verifiable.publish!
+  end
 end

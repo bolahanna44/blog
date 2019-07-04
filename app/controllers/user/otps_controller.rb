@@ -7,6 +7,7 @@ class User::OtpsController < User::ApplicationController
     otp = load_otp
     otp.token = params[:token]
     otp.verify!
+    do_action(otp)
     head :ok
   rescue Authentication::AuthyError => e
     render json: { error: e.message }, status: :bad_request
@@ -22,6 +23,10 @@ class User::OtpsController < User::ApplicationController
   end
 
   private
+
+  def do_action(otp)
+    otp.verifiable.publish! if otp.verifiable_type == 'Post'
+  end
 
   def load_otp
     Otp.find(params[:id])

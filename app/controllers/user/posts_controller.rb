@@ -22,28 +22,11 @@ class User::PostsController < User::ApplicationController
     end
   end
 
-  def publish
-    @post = load_post
-    authorize @post
-  end
-
-  def authenticate
-    post = load_post
-    authorize post
-    Authentication.verify_token(params[:authy_id], params[:token])
-    post.authenticate!
-    post.publish_date.present? && post.publish_date > Time.now ? post.schedule! : post.publish!
-  rescue Authentication::AuthyError => e
-    render json: {
-        error: e.message
-    }, status: :bad_request
-  end
-
   private
 
   def post_params
     params.require(:post).permit(:title, :description,
-                                 :content, :state,
+                                 :content,
                                  :publish_date, :photo)
   end
 

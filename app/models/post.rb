@@ -18,19 +18,9 @@ class Post < ApplicationRecord
   aasm column: 'state' do
     state :draft, initial: true
     state :published
-    state :authenticated
-    state :scheduled
 
     event :publish do
-      transitions from: %i[authenticated scheduled], to: :published
-    end
-
-    event :authenticate do
-      transitions from: :draft, to: :authenticated
-    end
-
-    event :schedule do
-      transitions from: :authenticated, to: :scheduled
+      transitions from: :draft, to: :published
     end
   end
 

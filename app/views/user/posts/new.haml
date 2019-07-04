@@ -19,7 +19,7 @@
             = f.file_field :photo, class: 'form-control', accept: 'image/*'
           .form-group
             = label_tag :auth_method
-            = select_tag :auth_method, options_for_select({'Authy App': 0, 'SMS': 1}),{class: 'form-control'}
+            = select_tag :auth_method, options_for_select({'Authy App': 'authy_app', 'SMS': 'sms'}),{class: 'form-control'}
           .form-group
             = f.label :publish_date
             = f.text_field :publish_date, class: 'form-control', id: 'flatpickr'
