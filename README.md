@@ -40,7 +40,7 @@ on the server do the following
 1. install ImageMagick by running `sudo apt install imagemagick`
 3. install Redis by running the following 
 `sudo apt-get install redis-server`
-4. ensure it is installed properly by running 
+4. ensure it is installed and running properly by running 
 `sudo ps aux | grep redis`
 
 
