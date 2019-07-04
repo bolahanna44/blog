@@ -12,7 +12,7 @@
       = post.user.username
       = "- status: #{post.state.humanize}"
 
-  %p= post.description
+  %p{style: 'overflow-wrap: break-word'}= post.description
 
   %a.button.button-style.button-anim.fa.fa-long-arrow-right{:href => user_post_path(post)}
     %span Read More

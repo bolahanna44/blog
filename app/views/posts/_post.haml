@@ -15,7 +15,7 @@
       - if current_page?(user_posts_path)
         = "- status: #{post.state.humanize}"
 
-  %p= post.description
+  %p{style: 'overflow-wrap: break-word'}= post.description
 
   %a.button.button-style.button-anim.fa.fa-long-arrow-right{:href => post_path(post)}
     %span Read More
