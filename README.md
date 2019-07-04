@@ -54,12 +54,12 @@ you will encounter error that master.key and database.yml is not found in the sh
 so do the following in the server 
 
 1. add master.key by running the following 
-`sudo cat your-local-master-key-here >> /home/username/apps/blog/shared/config/master.key`
+`sudo cat your-local-master-key-here >> /home/server-user-name-here/apps/blog/shared/config/master.key`
 2. add Google cloud storage key by running 
-`sudo nano /home/username/apps/blog/shared/config/keys/gcs_key.json`
+`sudo nano /home/server-user-name-here/apps/blog/shared/config/keys/gcs_key.json`
 3. paste your json object you get from google then ctrl + x to save the file 
 4. add database configuration with the same way
-  `sudo nano /home/username/apps/blog/shared/config/database.yml`
+  `sudo nano /home/server-user-name-here/apps/blog/shared/config/database.yml`
 
 after you add those files run `cap productiopn deploy`
 in you local app directory and it will run successfully
