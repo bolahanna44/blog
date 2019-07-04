@@ -14,6 +14,7 @@
 //= require activestorage
 //= require turbolinks
 //= require vendors/intlTelInput.min
+// = require vendors/flatpickr
 // = require vendors/jquery.min
 //= require vendors/plugin
 //= require vendors/scripts
