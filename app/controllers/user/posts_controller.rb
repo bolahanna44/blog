@@ -14,37 +14,20 @@ class User::PostsController < User::ApplicationController
   def create
     post = current_user.posts.build(post_params)
 
-    if post.save
-      redirect_to publish_user_post_path(post)
+    if post.save && post.create_otp(auth_method: params[:auth_method])
+      redirect_to user_otp_path(post.otp)
     else
       flash.now.alert = post.errors.full_messages.to_sentence
       render :new
     end
   end
 
-  def publish
-    @post = load_post
-    authorize @post
-  end
-
-  def authenticate
-    post = load_post
-    authorize post
-    Authentication.verify_token(params[:authy_id], params[:token])
-    post.authenticate!
-    post.publish_date.present? && post.publish_date > Time.now ? post.schedule! : post.publish!
-  rescue Authentication::AuthyError => e
-    render json: {
-        error: e.message
-    }, status: :bad_request
-  end
-
   private
 
   def post_params
     params.require(:post).permit(:title, :description,
-                                 :content, :state,
-                                 :publish_date, :photo, :auth_method)
+                                 :content,
+                                 :publish_date, :photo)
   end
 
   def load_post
@@ -52,6 +35,6 @@ class User::PostsController < User::ApplicationController
   end
 
   def load_posts
-    current_user.posts.order(created_at: :desc)
+    current_user.posts.order(created_at: :desc).includes(:otp)
   end
 end

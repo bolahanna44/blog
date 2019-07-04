@@ -3,6 +3,6 @@ class PublishPostWorker
 
   def perform(id)
     post = Post.find_by(id: id)
-    post.publish! if post.present? && post.scheduled?
+    post.publish! if post.present? && post.otp.verified?
   end
 end

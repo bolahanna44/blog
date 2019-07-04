@@ -1,0 +1,138 @@
+.col-md-12.page-body
+  .row
+    .sub-title
+      %h2#pageTitle Send OTP Token
+    .col-md-12.content-page
+      .col-md-8.col-md-offset-2
+        #error.alert.alert-danger.hidden
+        #success.alert.alert-success.hidden
+        %form#sendTokenForm{:action => "http://uipasta.us14.list-manage.com/subscribe/post?u=854825d502cdc101233c08a21&id=86e84d44b7", :method => "post"}
+          .subscribe-form.margin-top-20
+            %input#phone.text-input{:placeholder => "Mobile", :type => "tel"}/
+            %input#mobile{:type => "hidden"}/
+            %button.submit-btn{:type => "submit"} Send
+        %form#verifyTokenForm.hidden{:action => "http://uipasta.us14.list-manage.com/subscribe/post?u=854825d502cdc101233c08a21&id=86e84d44b7", :method => "post"}
+          .subscribe-form.margin-top-20
+            %input#token.text-input{:placeholder => "Token", :type => "number"}/
+            %button.submit-btn#verify{:type => "submit"} Verify
+        %label.hidden#loading
+          Loading...
+%a.scroll-to-top{:href => "#"}
+  %i.fa.fa-long-arrow-up
+
+:javascript
+  $('document').ready(function () {
+    let phoneInput = document.getElementById('phone');
+    phoneInput.setCustomValidity("Invalid telephone number.");
+
+    window.intlTelInput(phoneInput, {
+      utilsScript: "#{javascript_path('vendors/utils.js')}",
+      separateDialCode: true,
+      autoPlaceholder: 'aggressive',
+      initialCountry: 'ae'
+    });
+
+    // mobile validator
+
+    $("#phone").keyup(function (e) {
+      let iti = window.intlTelInputGlobals.getInstance(phoneInput);
+      if (iti.isValidNumber()) {
+        phoneInput.setCustomValidity("");
+        let number = iti.getNumber();
+        $('#mobile').val(number)
+      } else {
+        phoneInput.setCustomValidity("Invalid telephone number.")
+      }
+    });
+
+    // send token and get authy id
+
+    $('#sendTokenForm').on('submit', function (e) {
+      e.preventDefault();
+      hide($('#sendTokenForm'));
+      show($('#loading'));
+
+      postRequest("/user/otps/#{@otp.id}/send_otp", { mobile: $('#mobile').val()}, function (response) {
+        hide($('#loading'));
+        show($('#verifyTokenForm'));
+        $('#pageTitle').text('Token Verification');
+
+        attachListenerToVerifyForm(response.authy_id)
+      }, function (msg) {
+        show($('#sendTokenForm'));
+        hide($('#loading'));
+        $('#error').text(msg.error);
+        show($('#error'));
+      })
+    });
+
+    // Attach submit listener to verify form and pass authy_id to it
+
+    function attachListenerToVerifyForm (authyId) {
+      $('#verifyTokenForm').on('submit', function (e) {
+        e.preventDefault();
+        $('#verify').text('Please Wait');
+        $('#verify').attr('disabled','true');
+
+        postRequest("/user/otps/#{@otp.id}/verify", { token: $('#token').val() }, function (response) {
+          hide($('#verifyTokenForm'));
+          hide($('#error'))
+          $('#success').text('your post will be posted or scheduled depending on selected preference');
+          show($('#success'))
+        }, function (msg) {
+          $('#verify').text('Verify');
+          $('#verify').removeAttr('disabled');
+          $('#error').text(msg.error);
+          show($('#error'));
+        })
+      });
+    }
+
+    // request wrapper
+
+    function postRequest(url, data, success, failed) {
+      console.log(url, data, 'POST')
+      var request = $.ajax({
+        url: url,
+        type: "POST",
+        data: data
+      });
+
+      request.done(function (response, textStatus, jqXHR){
+        success(response);
+      });
+
+      request.fail(function (response, textStatus, jqXHR){
+        failed(response.responseJSON);
+      });
+    }
+
+    function patchRequest(url, data, success, failed) {
+      console.log(url, data, 'PATCH')
+      var request = $.ajax({
+        url: url,
+        type: "PATCH",
+        data: data
+      });
+
+      request.done(function (response, textStatus, jqXHR){
+        success(response);
+      });
+
+      request.fail(function (response, textStatus, jqXHR){
+        failed(response.responseJSON);
+      });
+    }
+
+    // JQuery Dom Manipulator
+
+    function show(element) {
+      element.attr('style','display:flex !important');
+    }
+
+    function hide(element) {
+      element.attr('style','display:none !important');
+    }
+  });
+
+
