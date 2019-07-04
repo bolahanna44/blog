@@ -21,7 +21,7 @@ class Post < ApplicationRecord
     state :scheduled
 
     event :publish do
-      transitions from: :draft, to: :published
+      transitions from: %i[draft scheduled], to: :published
     end
 
     event :schedule do
