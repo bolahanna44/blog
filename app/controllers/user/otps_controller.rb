@@ -25,7 +25,12 @@ class User::OtpsController < User::ApplicationController
   private
 
   def do_action(otp)
-    otp.verifiable.publish! if otp.verifiable_type == 'Post'
+    publish_post(otp) if otp.verifiable_type == 'Post'
+  end
+
+  def publish_post(otp)
+    post = otp.verifiable
+    post.publish_date.present? && post.publish_date > Time.now ? post.schedule! : post.publish!
   end
 
   def load_otp

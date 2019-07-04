@@ -18,9 +18,14 @@ class Post < ApplicationRecord
   aasm column: 'state' do
     state :draft, initial: true
     state :published
+    state :scheduled
 
     event :publish do
       transitions from: :draft, to: :published
+    end
+
+    event :schedule do
+      transitions from: :draft, to: :scheduled
     end
   end
 
