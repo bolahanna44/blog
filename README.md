@@ -63,4 +63,4 @@ so do the following in the server
 
 after you add those files run `cap productiopn deploy`
 in you local app directory and it will run successfully
-this time  
+this time ;) 
