@@ -28,7 +28,7 @@ in the app directory run the following commands
  google_client_secret: xxx
 ```
 
-8. edit edit config/storage.yml with your
+8. edit config/storage.yml with your
 google cloud storage configuration
 9. run foreman s
 10. open http://localhost:3000 ;) 
