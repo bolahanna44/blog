@@ -18,8 +18,8 @@ in the app directory run the following commands
 3. cp config/database.yml.example config/database.yml
 4. configure config/database.yml with your configuration
 5. `rails db:create db:migrate`
-6.. run `EDITOR=nano bin/rails encrypted:edit config/credentials.yml.enc`
-7.. append the following keys to your file  
+6. run `EDITOR=nano bin/rails encrypted:edit config/credentials.yml.enc`
+7. append the following keys to your file  
 ```
  authy_key: xxx
  facebook_client_id: xxx
@@ -30,9 +30,8 @@ in the app directory run the following commands
 
 8. edit edit config/storage.yml with your
 google cloud storage configuration
-9.
-8. run foreman s
-9. open http://localhost:3000 ;) 
+9. run foreman s
+10. open http://localhost:3000 ;) 
 
 
 ## Deployment
