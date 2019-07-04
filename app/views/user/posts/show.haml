@@ -20,7 +20,7 @@
             , by
             = @post.user.username
 
-        %p= @post.content
+        %p{style: 'overflow-wrap: break-word'}= @post.content
 
 
 :javascript
