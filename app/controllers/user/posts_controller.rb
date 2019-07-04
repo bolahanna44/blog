@@ -14,8 +14,8 @@ class User::PostsController < User::ApplicationController
   def create
     post = current_user.posts.build(post_params)
 
-    if post.save
-      redirect_to publish_user_post_path(post)
+    if post.save && post.create_otp(auth_method: params[:auth_method])
+      redirect_to user_otp_path(post.otp)
     else
       flash.now.alert = post.errors.full_messages.to_sentence
       render :new
@@ -44,7 +44,7 @@ class User::PostsController < User::ApplicationController
   def post_params
     params.require(:post).permit(:title, :description,
                                  :content, :state,
-                                 :publish_date, :photo, :auth_method)
+                                 :publish_date, :photo)
   end
 
   def load_post

@@ -5,6 +5,7 @@ class PostsController < ApplicationController
 
   def show
     @post = load_post
+    # following lines work with meta tag gem to add meta tags to the show post page
     @page_description = @post.description
     @page_keywords    = @post.title.split(' ').join(',')
     @page_image_src = @post.photo.attached? && url_for(@post.photo)
