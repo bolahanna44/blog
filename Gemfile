@@ -91,3 +91,5 @@ gem "google-cloud-storage", "~> 1.11", require: false
 
 gem 'friendly_id', '~> 5.2.4'
 gem 'meta-tags'
+# gem 'sitemap_generator'
+
