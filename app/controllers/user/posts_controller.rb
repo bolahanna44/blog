@@ -8,6 +8,7 @@ class User::PostsController < User::ApplicationController
   end
 
   def show
+    authorize @post
     @post = load_post
   end
 
