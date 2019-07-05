@@ -72,15 +72,6 @@ ActiveRecord::Schema.define(version: 2019_07_04_032551) do
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
-  create_table "tokens", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "tokenable_type"
-    t.bigint "tokenable_id"
-    t.string "method"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["tokenable_type", "tokenable_id"], name: "index_tokens_on_tokenable_type_and_tokenable_id"
-  end
-
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
