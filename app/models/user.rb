@@ -5,7 +5,8 @@ class User < ApplicationRecord
          :rememberable, :validatable, :omniauthable,
          omniauth_providers: %i[facebook google_oauth2]
 
-  validates :username, presence: true
+  validates :username, presence: true, length: { maximum: 200 }
+  validates :email, presence: true, length: { maximum: 200 }
 
   def self.from_omniauth(auth)
     where(email: auth.info.email).first_or_initialize do |user|
