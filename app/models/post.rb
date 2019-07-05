@@ -12,8 +12,6 @@ class Post < ApplicationRecord
   validates :description, presence: true, length: { maximum: 500 }
   validates :content, presence: true, length: { maximum: 2000 }
 
-  after_create_commit :schedule_post_publish
-
   aasm column: 'state' do
     state :draft, initial: true
     state :published
@@ -24,13 +22,11 @@ class Post < ApplicationRecord
     end
 
     event :schedule do
+      before do
+        PublishPostWorker.perform_at(publish_date, id) if publish_date.present?
+      end
+
       transitions from: :draft, to: :scheduled
     end
-  end
-
-  private
-
-  def schedule_post_publish
-    PublishPostWorker.perform_at(publish_date, id) if publish_date.present?
   end
 end
