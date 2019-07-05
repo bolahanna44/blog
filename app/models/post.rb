@@ -31,8 +31,6 @@ class Post < ApplicationRecord
   private
 
   def schedule_post_publish
-    if publish_date.present?
-      PublishPostWorker.perform_at(publish_date, id)
-    end
+    PublishPostWorker.perform_at(publish_date, id) if publish_date.present?
   end
 end
