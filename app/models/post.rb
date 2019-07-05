@@ -13,7 +13,6 @@ class Post < ApplicationRecord
   validates :content, presence: true, length: { maximum: 2000 }
 
   after_create_commit :schedule_post_publish
-  after_create_commit :create_otp_object
 
   aasm column: 'state' do
     state :draft, initial: true
@@ -30,10 +29,6 @@ class Post < ApplicationRecord
   end
 
   private
-
-  def create_otp_object
-    create_otp
-  end
 
   def schedule_post_publish
     if publish_date.present?

@@ -24,6 +24,10 @@ class Otp < ApplicationRecord
       end
 
       transitions from: :sent, to: :verified
+
+      after do
+        publish_post if verifiable_type == 'Post'
+      end
     end
   end
 
@@ -35,5 +39,10 @@ class Otp < ApplicationRecord
 
   def verify_token
     Authentication.verify_token(authy_id, token)
+  end
+
+  def publish_post
+    post = verifiable
+    post.publish_date.present? && post.publish_date > Time.now ? post.schedule! : post.publish!
   end
 end
